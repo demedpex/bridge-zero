@@ -1,0 +1,23 @@
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# 편집기
+.vscode/
+.idea/
+
+# 의존성 / 빌드 산출물
+node_modules/
+dist/
+build/
+
+# 파이썬
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# 환경 변수 (비밀키 등)
+.env
+.env.local

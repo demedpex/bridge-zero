@@ -1,0 +1,137 @@
+/*
+ * 화면 토큰.
+ * ※ 아래 치수·색은 토스 UX 가이드에 기준이 없다. 우리가 정한 값이다.
+ *   (constants/design.ts 에 같은 값을 문서로 남겨 두었다.)
+ */
+
+:root {
+  /* 글자 */
+  --font-size-base: 17px;
+  --font-size-title: 24px;
+  --font-size-body: 15px;
+  --font-size-caption: 13px;
+  --font-size-amount: 22px;
+
+  --line-height-title: 1.38;
+  --line-height-body: 1.6;
+
+  /* 여백 — 4의 배수로 맞춘다 */
+  --padding-horizontal: 20px;
+  --gap-vertical: 12px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  --button-height: 52px;
+  --radius: 12px;
+  --radius-sm: 8px;
+
+  /* TODO(brand): 브랜드 컬러가 아직 정해지지 않았다. 중립 남색을 임시로 쓴다. */
+  --brand-primary: #2f4a7a;
+  --brand-primary-pressed: #24395e;
+  --brand-tint: #eef2f9;
+  --brand-on-primary: #ffffff;
+
+  /* 색 */
+  --bg: #ffffff;
+  --bg-subtle: #f5f6f8;
+  --surface: #ffffff;
+  --surface-selected: var(--brand-tint);
+  --text: #16181d;
+  --text-secondary: #4e525b;
+  --text-caption: #767b85;
+  --border: #e3e5ea;
+  --border-strong: #c3c7d0;
+  --danger: #b83227;
+  --danger-tint: #fdf0ee;
+  --disabled-bg: #eaebee;
+  --disabled-text: #9b9fa8;
+
+  --shadow-cta: 0 -1px 0 var(--border);
+
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --brand-primary: #8aa6dd;
+    --brand-primary-pressed: #7690c4;
+    --brand-tint: #202634;
+    --brand-on-primary: #0f131a;
+
+    --bg: #131519;
+    --bg-subtle: #1b1e24;
+    --surface: #1b1e24;
+    --surface-selected: var(--brand-tint);
+    --text: #f3f4f6;
+    --text-secondary: #bbbfc7;
+    --text-caption: #8f939c;
+    --border: #2b2f37;
+    --border-strong: #454a55;
+    --danger: #f0897e;
+    --danger-tint: #2a1d1c;
+    --disabled-bg: #24282f;
+    --disabled-text: #696e77;
+
+    --shadow-cta: 0 -1px 0 var(--border);
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Malgun Gothic', 'Segoe UI', sans-serif;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-body);
+  -webkit-font-smoothing: antialiased;
+  /* 한국어는 어절 단위로 끊는 편이 읽기 좋다. 다만 한 어절이 너무 길면 넘치지 않게 풀어 준다. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+#root {
+  height: 100%;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  cursor: pointer;
+}
+
+input,
+select {
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  color: var(--text);
+}
+
+/* 키보드로 옮겨 다닐 때 어디에 있는지 보이게 한다. */
+:focus-visible {
+  outline: 2px solid var(--brand-primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

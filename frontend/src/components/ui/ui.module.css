@@ -1,0 +1,559 @@
+/* 자체 컴포넌트. 토스 디자인 시스템(TDS) 패키지를 쓰지 않고 같은 역할을 직접 만든다. */
+
+/* ── 화면 뼈대 ───────────────────────────────
+   화면 높이를 고정하고 본문만 스크롤한다. 그래야 하단 버튼이 늘 같은 자리에 있다. */
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  max-width: 480px;
+  margin: 0 auto;
+  background: var(--bg);
+  padding-top: env(safe-area-inset-top);
+}
+
+.content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--space-2) var(--padding-horizontal) var(--space-6);
+  padding-left: max(var(--padding-horizontal), env(safe-area-inset-left));
+  padding-right: max(var(--padding-horizontal), env(safe-area-inset-right));
+}
+
+/* ── Navigation (상단 뒤로가기) ────────────────── */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  height: 52px;
+  padding: 0 var(--space-2);
+  padding-left: max(var(--space-2), env(safe-area-inset-left));
+  padding-right: max(var(--padding-horizontal), env(safe-area-inset-right));
+}
+
+.navButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text);
+}
+
+.navButton:hover {
+  background: var(--bg-subtle);
+}
+
+.navButton:active {
+  background: var(--border);
+}
+
+.navSpacer {
+  width: 40px;
+  height: 40px;
+}
+
+/* ── 진행률 ──────────────────────────────────── */
+.progressTrack {
+  flex: 1 1 auto;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--brand-primary);
+  transition: width 200ms ease-out;
+}
+
+.progressLabel {
+  flex: 0 0 auto;
+  font-size: var(--font-size-caption);
+  color: var(--text-caption);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Top (화면 제목) ─────────────────────────── */
+.top {
+  margin: var(--space-3) 0 var(--space-6);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--font-size-title);
+  font-weight: 700;
+  line-height: var(--line-height-title);
+  letter-spacing: -0.02em;
+  color: var(--text);
+  /* 제목 줄을 고르게 나눈다 */
+  text-wrap: balance;
+}
+
+.subtitle {
+  margin: var(--space-2) 0 0;
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--text-secondary);
+}
+
+/* ── Paragraph (본문) ────────────────────────── */
+.paragraph {
+  margin: 0 0 var(--gap-vertical);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--text-secondary);
+}
+
+.caption {
+  font-size: var(--font-size-caption);
+  color: var(--text-caption);
+}
+
+/* ── 본문 안에서 묶음을 나눌 때 ─────────────── */
+.section {
+  margin-top: var(--space-6);
+}
+
+/* ── ListRow (선택지 한 줄) ──────────────────── */
+.rowGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--button-height);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  text-align: left;
+  transition: background-color 120ms ease-out, border-color 120ms ease-out;
+}
+
+.row:hover {
+  border-color: var(--border-strong);
+}
+
+.row:active {
+  background: var(--bg-subtle);
+}
+
+.rowSelected,
+.rowSelected:hover {
+  border-color: var(--brand-primary);
+  background: var(--surface-selected);
+  /* 테두리를 굵히면 글자가 밀리므로 안쪽 그림자로 두께만 더한다 */
+  box-shadow: inset 0 0 0 1px var(--brand-primary);
+}
+
+.rowBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* 라벨과 설명은 각각 제 줄을 갖는다 (inline 이면 한 줄에 붙어 버린다) */
+.rowLabel {
+  display: block;
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.rowDescription {
+  display: block;
+  font-size: var(--font-size-caption);
+  line-height: 1.5;
+  color: var(--text-caption);
+}
+
+.radioMark {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border-strong);
+  border-radius: 50%;
+  transition: border-color 120ms ease-out;
+}
+
+.radioMarkSelected {
+  border-color: var(--brand-primary);
+  background: var(--brand-primary);
+  box-shadow: inset 0 0 0 4px var(--surface-selected);
+}
+
+/* ── Button ─────────────────────────────────── */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: var(--button-height);
+  padding: 0 var(--space-4);
+  border: 0;
+  border-radius: var(--radius);
+  font-size: var(--font-size-base);
+  font-weight: 700;
+  transition: background-color 120ms ease-out;
+}
+
+.buttonPrimary {
+  background: var(--brand-primary);
+  color: var(--brand-on-primary);
+}
+
+.buttonPrimary:hover:not(:disabled),
+.buttonPrimary:active:not(:disabled) {
+  background: var(--brand-primary-pressed);
+}
+
+.buttonSecondary {
+  background: var(--bg-subtle);
+  color: var(--text);
+}
+
+.buttonSecondary:hover:not(:disabled),
+.buttonSecondary:active:not(:disabled) {
+  background: var(--border);
+}
+
+.button:disabled {
+  background: var(--disabled-bg);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+.buttonText {
+  width: auto;
+  height: auto;
+  min-height: 44px; /* 손가락으로 누를 만한 크기 */
+  padding: var(--space-2) 0;
+  background: transparent;
+  color: var(--brand-primary);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.buttonText:hover:not(:disabled) {
+  color: var(--brand-primary-pressed);
+}
+
+/* ── BottomCTA (하단 고정) ───────────────────── */
+.bottomCta {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-3) var(--padding-horizontal);
+  padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom));
+  padding-left: max(var(--padding-horizontal), env(safe-area-inset-left));
+  padding-right: max(var(--padding-horizontal), env(safe-area-inset-right));
+  background: var(--bg);
+  box-shadow: var(--shadow-cta);
+}
+
+/* ── 입력 ───────────────────────────────────── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  /* 입력이 여러 개 놓일 때 서로 묶여 보이지 않게 넉넉히 띄운다 */
+  margin-bottom: var(--space-5);
+}
+
+.field:last-child {
+  margin-bottom: 0;
+}
+
+.fieldLabel {
+  font-size: var(--font-size-caption);
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.inputWrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 56px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: border-color 120ms ease-out;
+}
+
+.inputWrap:hover {
+  border-color: var(--border-strong);
+}
+
+/* 테두리가 두 겹으로 보이지 않게, 초점 표시는 감싸는 쪽에 준다. */
+.inputWrap:focus-within {
+  border-color: var(--brand-primary);
+  box-shadow: inset 0 0 0 1px var(--brand-primary);
+}
+
+.inputWrapInvalid,
+.inputWrapInvalid:hover {
+  border-color: var(--danger);
+  background: var(--danger-tint);
+}
+
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  outline: none;
+  padding: var(--space-4) 0;
+  font-size: var(--font-size-amount);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.input:focus-visible {
+  outline: none;
+}
+
+.input::placeholder {
+  color: var(--text-caption);
+  font-weight: 400;
+}
+
+.inputSuffix {
+  flex: 0 0 auto;
+  font-size: var(--font-size-body);
+  color: var(--text-secondary);
+}
+
+.select {
+  width: 100%;
+  min-height: 56px;
+  padding: 0 40px 0 var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--surface);
+  /* 기본 화살표 대신 같은 모양을 직접 그려 라이트·다크에서 같게 보이게 한다 */
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23767b85' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--space-4) center;
+  appearance: none;
+  font-weight: 500;
+  transition: border-color 120ms ease-out;
+}
+
+.select:hover {
+  border-color: var(--border-strong);
+}
+
+.select:focus-visible {
+  border-color: var(--brand-primary);
+}
+
+.selectRow {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.selectRow > * {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ── 도움말 펼침 ────────────────────────────── */
+.helpToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-height: 44px;
+  margin-top: var(--space-1);
+  padding: var(--space-2) 0;
+  border: 0;
+  background: transparent;
+  color: var(--brand-primary);
+  font-size: var(--font-size-body);
+  font-weight: 600;
+}
+
+.helpPanel {
+  margin-top: var(--space-1);
+  padding: var(--space-4);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+  font-size: var(--font-size-body);
+  line-height: var(--line-height-body);
+  color: var(--text-secondary);
+}
+
+.helpPanel p {
+  margin: 0 0 var(--space-3);
+}
+
+.helpPanel p:last-child {
+  margin-bottom: 0;
+}
+
+.caret {
+  display: inline-flex;
+  transition: transform 150ms ease-out;
+}
+
+.caretOpen {
+  transform: rotate(180deg);
+}
+
+/* ── 오류 문구 ──────────────────────────────── */
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  margin: 0;
+  font-size: var(--font-size-caption);
+  line-height: 1.5;
+  color: var(--danger);
+}
+
+/* ── 확인 화면 목록 ─────────────────────────── */
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.reviewItem {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.reviewLabel {
+  flex: 0 0 38%;
+  font-size: var(--font-size-caption);
+  color: var(--text-caption);
+}
+
+.reviewValue {
+  flex: 1 1 auto;
+  font-size: var(--font-size-body);
+  font-weight: 500;
+}
+
+.reviewEdit {
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--brand-primary);
+  font-size: var(--font-size-caption);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+}
+
+.reviewEdit:hover {
+  color: var(--brand-primary-pressed);
+}
+
+/* ── 그림 ───────────────────────────────────── */
+.figure {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-4) 0 var(--space-8);
+}
+
+.figureSmall {
+  display: flex;
+  justify-content: center;
+  margin: var(--space-2) 0 var(--space-5);
+}
+
+/* ── 결과(스텁 확인) ────────────────────────── */
+.resultBox {
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+}
+
+.resultCode {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--font-size-caption);
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: var(--text-secondary);
+}
+
+.resultHighlight {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  border-radius: var(--radius);
+  background: var(--surface-selected);
+}
+
+.resultNumber {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--brand-primary);
+  font-variant-numeric: tabular-nums;
+}
+
+.resultUnit {
+  font-size: var(--font-size-body);
+  color: var(--text-secondary);
+}
+
+/* ── 그림 채색 ──────────────────────────────
+   SVG 속성에 var() 를 직접 넣으면 브라우저마다 해석이 갈려서, 클래스로 칠한다. */
+.figCellFilled {
+  fill: var(--brand-primary);
+}
+
+.figCellEmpty {
+  fill: var(--bg-subtle);
+  stroke: var(--border);
+}
+
+.figRing {
+  stroke: var(--brand-primary);
+}
+
+.doneCircle {
+  fill: var(--brand-primary);
+}
+
+.doneCheck {
+  stroke: var(--brand-on-primary);
+}
